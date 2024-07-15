@@ -32,7 +32,7 @@ fn check_prefix(public_key: &str, prefixes: &[String], case_sensitive: bool) -> 
 
 fn main() {
     let mut prefixes: Vec<String>;
-    println!("\n\x1b[1m\x1b[47m\x1b[34mChange thread count at src/main.rs:55\x1b[0m\n");
+    println!("\n\x1b[1m\x1b[44m\x1b[30mChange thread count at src/main.rs:53\x1b[0m\n");
     loop {
         println!("\x1b[1mEnter desired prefix(es) separated by spaces:\x1b[0m\n\x1b[3m[prefix1 prefix2 etc.]\x1b[0m");
 
@@ -45,18 +45,18 @@ fn main() {
         if !prefixes.is_empty() {
             break;
         }
-        println!("\x1b[31m\x1b[1merror:\x1b[0m No prefixes provided. Please enter at least one prefix.");
+        println!("\x1b[31m\x1b[1merror:\x1b[0m No prefixes provided. Please enter at least one prefix.\n");
     }
-    println!("\x1b[1m\nDo you want the search to be case sensitive?:\x1b[0m\n\x1b[3m[y] / [n]\x1b[0m");
+    println!("\x1b[1m\nCase sensitive search?:\x1b[0m\n\x1b[3m[y] / [n]\x1b[0m");
     
 
-    let num_threads = 6; // adjust thread count based on your computer capacity
+    let num_threads = 6; // adjust thread count based on your computer capacity - default is 6
 
 
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("Failed to read line");
     let case_sensitive = input.trim().eq_ignore_ascii_case("y");
-    println!("\n\n");
+    println!("\n\x1b[1m\x1b[42m\x1b[30mSearching...\x1b[0m\n");
     let found = Arc::new(AtomicBool::new(false));
     let attempts = Arc::new(AtomicUsize::new(0));
     let found_prefixes = Arc::new(Mutex::new(vec![]));
@@ -102,7 +102,6 @@ fn main() {
                             print!("\x1b[A\x1b[K"); 
                         }
                         let rounded_attempts = ((attempts.load(Ordering::Relaxed) + 500_000) / 1_000_000) * 1_000_000;
-                        println!("\x1b[1mPrefixes to be searched:\x1b[0m {:?}", prefixes);
                         println!("\x1b[3mChecked \x1b[35m\x1b[1m{}\x1b[0m \x1b[3maddresses...\x1b[0m", rounded_attempts.to_formatted_string(&Locale::en));
                         io::stdout().flush().unwrap();
                         *printed_milestone = attempts.load(Ordering::Relaxed);
