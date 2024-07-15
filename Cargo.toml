@@ -1,0 +1,11 @@
+[package]
+name = "wallet_generator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+solana-sdk = "1.18.17" 
+rand = "0.7.0"
+crossbeam = "0.8"
+bs58 = "0.4"
+num-format = "0.4.0"  
